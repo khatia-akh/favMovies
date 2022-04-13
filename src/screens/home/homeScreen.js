@@ -10,11 +10,10 @@ import {
 } from "react-native";
 import axios from "axios";
 import MovieItem from "../../components/moviesItem";
-
 import { FavouriteListContext } from "../../context/favouriteListContext";
 import { CollorsList } from "../../constants/colors";
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
   const [data, setData] = useState();
   const [searchResult, setSearchResult] = useState();
   const [text, setText] = useState("");
@@ -29,18 +28,13 @@ const HomeScreen = ({ navigation }) => {
     setSearch(false);
     setText("");
     axios
-      .get("https://imdb-api.com/en/API/BoxOfficeAllTime/k_b9bwwcyz")
+      .get("https://imdb-api.com/en/API/BoxOfficeAllTime/k_nkq1b6r5")
       .then(function (response) {
-        // handle success
         setData(response?.data?.items);
         setLoading(false);
       })
       .catch(function (error) {
-        // handle error
         console.log(error);
-      })
-      .then(function () {
-        // always executed
       });
   };
 
@@ -52,45 +46,24 @@ const HomeScreen = ({ navigation }) => {
     setLoading(true);
     setSearch(true);
     axios
-      .get(`https://imdb-api.com/en/API/SearchMovie/k_b9bwwcyz/${text}`)
+      .get(`https://imdb-api.com/en/API/SearchMovie/k_nkq1b6r5/${text}`)
       .then(function (response) {
-        // handle success
-
         setSearchResult(response?.data?.results?.slice(0, 5));
         setLoading(false);
       })
       .catch(function (error) {
-        // handle error
         console.log(error);
-      })
-      .then(function () {
-        // always executed
       });
   };
 
   return (
     <View style={styles.container}>
       {loading && (
-        <View
-          style={{
-            position: "absolute",
-            width: "100%",
-            top: 300,
-            zIndex: 200,
-          }}
-        >
+        <View style={styles.loadingView}>
           <ActivityIndicator size="large" color="yellow" />
         </View>
       )}
-      <View
-        style={{
-          flexDirection: "row",
-          marginHorizontal: 20,
-          borderRadius: 5,
-          overflow: "hidden",
-          marginTop: 30,
-        }}
-      >
+      <View style={styles.searchContainer}>
         <TextInput
           placeholder="Search Imdb"
           style={styles.searchInput}
@@ -98,25 +71,10 @@ const HomeScreen = ({ navigation }) => {
           onChangeText={(value) => setText(value)}
         />
         <TouchableOpacity
-          style={{
-            borderLeftWidth: 1,
-            borderLeftColor: "#989898",
-            backgroundColor: "#fff",
-            height: 40,
-            paddingHorizontal: 10,
-            justifyContent: "center",
-          }}
+          style={styles.searchBtn}
           onPress={search ? getMoviesData : onSearch}
         >
-          <Text
-            style={{
-              color: "#989898",
-              fontWeight: "bold",
-              fontSize: 16,
-            }}
-          >
-            {search ? "x" : "search"}
-          </Text>
+          <Text style={styles.searchBtnText}>{search ? "x" : "search"}</Text>
         </TouchableOpacity>
       </View>
 
@@ -128,9 +86,7 @@ const HomeScreen = ({ navigation }) => {
       <FlatList
         data={search ? searchResult : data}
         keyExtractor={(item, index) => index}
-        renderItem={(item) => (
-          <MovieItem item={item.item} navigation={navigation} />
-        )}
+        renderItem={(item) => <MovieItem item={item.item} />}
         contentContainerStyle={{ paddingBottom: 120 }}
       />
     </View>
@@ -156,5 +112,31 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     fontSize: 25,
     fontWeight: "bold",
+  },
+  loadingView: {
+    position: "absolute",
+    width: "100%",
+    top: 300,
+    zIndex: 200,
+  },
+  searchContainer: {
+    flexDirection: "row",
+    marginHorizontal: 20,
+    borderRadius: 5,
+    overflow: "hidden",
+    marginTop: 30,
+  },
+  searchBtn: {
+    borderLeftWidth: 1,
+    borderLeftColor: "#989898",
+    backgroundColor: "#fff",
+    height: 40,
+    paddingHorizontal: 10,
+    justifyContent: "center",
+  },
+  searchBtnText: {
+    color: "#989898",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });

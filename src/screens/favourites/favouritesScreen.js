@@ -1,17 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
-import axios from "axios";
 import MovieItem from "../../components/moviesItem";
-
 import { FavouriteListContext } from "../../context/favouriteListContext";
 import { CollorsList } from "../../constants/colors";
 
-const FavouritesScreen = ({ navigation }) => {
-  const [data, setData] = useState();
-
+const FavouritesScreen = () => {
   const { favouriteList, updateFavouriteList } =
     useContext(FavouriteListContext);
 
+  useEffect(() => {}, []);
   return (
     <View style={styles.container}>
       <FlatList
@@ -20,9 +17,7 @@ const FavouritesScreen = ({ navigation }) => {
           return <Text style={styles.title}>favorite movie</Text>;
         }}
         keyExtractor={(item, index) => index}
-        renderItem={(item) => (
-          <MovieItem item={item.item} navigation={navigation} />
-        )}
+        renderItem={(item) => <MovieItem item={item.item} />}
         contentContainerStyle={{ paddingBottom: 120 }}
       />
     </View>

@@ -17,16 +17,12 @@ function DetailsScreen({ route }) {
 
   const getMoviesDetailData = () => {
     axios
-      .get(`https://imdb-api.com/API/Posters/k_b9bwwcyz/${data.id}`)
+      .get(`https://imdb-api.com/API/Posters/k_nkq1b6r5/${data.id}`)
       .then(function (response) {
-        console.log("response-->", response.data.posters[0]);
         setPoster(response?.data?.posters[0]?.link);
       })
       .catch(function (error) {
         console.log(error);
-      })
-      .then(function () {
-        // always executed
       });
   };
   useEffect(() => {

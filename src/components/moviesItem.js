@@ -4,8 +4,10 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 import { FavouriteListContext } from "../context/favouriteListContext";
 import { CollorsList } from "../constants/colors";
+import { useNavigation } from "@react-navigation/native";
 
-const MovieItem = ({ item, navigation }) => {
+const MovieItem = ({ item }) => {
+  const navigation = useNavigation();
   const { favouriteList, updateFavouriteList } =
     useContext(FavouriteListContext);
 
@@ -20,7 +22,7 @@ const MovieItem = ({ item, navigation }) => {
       style={styles.container}
     >
       <View style={styles.textsContainer}>
-        <View style={{ flex: 1, margin: 5 }}>
+        <View style={styles.titleView}>
           <Text style={styles.title}>{item.title}</Text>
           <Text style={styles.title}>{item.year}</Text>
         </View>
@@ -78,4 +80,5 @@ const styles = StyleSheet.create({
     color: "#F4C518",
     fontWeight: "bold",
   },
+  titleView: { flex: 1, margin: 5 },
 });
