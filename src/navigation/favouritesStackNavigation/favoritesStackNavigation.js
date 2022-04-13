@@ -9,7 +9,6 @@ const FavoriteSackNavigation = () => {
   return (
     <FavoritessStack.Navigator
       screenOptions={{
-        //   headerShown: false,
         headerStyle: {
           backgroundColor: "#121212",
           color: "red",
@@ -19,8 +18,10 @@ const FavoriteSackNavigation = () => {
         },
       }}
     >
-      <FavoritessStack.Screen name="Favourite" component={FavouritesScreen} />
-      {/* <FavoritessStack.Screen name="Details" component={DetailsScreen} /> */}
+      <FavoritessStack.Screen
+        name="FavouritesScreen"
+        component={FavouritesScreen}
+      />
     </FavoritessStack.Navigator>
   );
 };

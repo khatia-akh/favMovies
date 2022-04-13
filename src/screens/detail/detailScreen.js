@@ -1,36 +1,36 @@
-import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-} from "react-native";
+import React, { useState, useEffect, useContext } from "react";
+import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import axios from "axios";
+import { FavouriteListContext } from "../../context/favouriteListContext";
+import { CollorsList } from "../../constants/colors";
 
 function DetailsScreen({ route }) {
   const { data } = route.params;
-  console.log("route params -data--->", data);
-
   const [poster, setPoster] = useState();
 
-  useEffect(() => {
+  const { favouriteList, updateFavouriteList } =
+    useContext(FavouriteListContext);
+
+  const saveToFavourite = (favItem) => {
+    updateFavouriteList([...favouriteList, favItem]);
+  };
+
+  const getMoviesDetailData = () => {
     axios
       .get(`https://imdb-api.com/API/Posters/k_b9bwwcyz/${data.id}`)
       .then(function (response) {
-        // handle success
         console.log("response-->", response.data.posters[0]);
         setPoster(response?.data?.posters[0]?.link);
-        // setData(response.data.items);
       })
       .catch(function (error) {
-        // handle error
         console.log(error);
       })
       .then(function () {
         // always executed
       });
+  };
+  useEffect(() => {
+    getMoviesDetailData();
   }, []);
 
   return (
@@ -42,7 +42,10 @@ function DetailsScreen({ route }) {
         </View>
         <View style={styles.bottomView}>
           <Text style={styles.title}>rank: {data.rank}</Text>
-          <TouchableOpacity style={styles.saveBtn}>
+          <TouchableOpacity
+            style={styles.saveBtn}
+            onPress={() => saveToFavourite(data)}
+          >
             <Text style={styles.buttonTxt}>save</Text>
           </TouchableOpacity>
         </View>
@@ -62,7 +65,7 @@ export default DetailsScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000",
+    backgroundColor: CollorsList.black,
     marginBottom: 50,
   },
   textsContainer: {
@@ -73,10 +76,10 @@ const styles = StyleSheet.create({
   imgContainer: {
     flex: 1,
     height: 500,
-    backgroundColor: "#000",
+    backgroundColor: CollorsList.black,
   },
   title: {
-    color: "#fff",
+    color: CollorsList.white,
   },
   saveBtn: {
     backgroundColor: "#2C2C2C",

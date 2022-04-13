@@ -10,7 +10,6 @@ const HomeStackNavigation = () => {
   return (
     <HomeStack.Navigator
       screenOptions={{
-        //   headerShown: false,
         headerStyle: {
           backgroundColor: "#121212",
         },
@@ -19,7 +18,7 @@ const HomeStackNavigation = () => {
         },
       }}
     >
-      <HomeStack.Screen name="Home" component={HomeScreen} />
+      <HomeStack.Screen name="HomeScreen" component={HomeScreen} />
       <HomeStack.Screen name="Details" component={DetailsScreen} />
     </HomeStack.Navigator>
   );

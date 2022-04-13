@@ -3,19 +3,15 @@ import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 import { FavouriteListContext } from "../context/favouriteListContext";
+import { CollorsList } from "../constants/colors";
 
 const MovieItem = ({ item, navigation }) => {
   const { favouriteList, updateFavouriteList } =
     useContext(FavouriteListContext);
 
-  //   console.log("favouriteList favouriteList----******--->", favouriteList);
-
-  //   const [state, setState] = useState([]);
-
   const saveToFavourite = (favItem) => {
-    // updateFavouriteList({ favourites: [...favouriteList, favItem] });
     updateFavouriteList([...favouriteList, favItem]);
-    console.log("statatetete--->", favouriteList);
+    alert("saved");
   };
 
   return (
@@ -34,7 +30,7 @@ const MovieItem = ({ item, navigation }) => {
             style={styles.saveBtn}
             onPress={() => saveToFavourite(item)}
           >
-            <Text style={styles.buttonTxt}>save</Text>
+            <Text style={styles.buttonTxt}>Save</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -48,7 +44,6 @@ export default MovieItem;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "pink",
     marginHorizontal: 20,
     marginVertical: 7,
     flexDirection: "row",
@@ -63,10 +58,10 @@ const styles = StyleSheet.create({
   imgContainer: {
     width: 160,
     height: 150,
-    backgroundColor: "#fff",
+    backgroundColor: CollorsList.white,
   },
   title: {
-    color: "#fff",
+    color: CollorsList.white,
   },
   saveBtn: {
     backgroundColor: "#2C2C2C",

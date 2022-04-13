@@ -12,6 +12,7 @@ import axios from "axios";
 import MovieItem from "../../components/moviesItem";
 
 import { FavouriteListContext } from "../../context/favouriteListContext";
+import { CollorsList } from "../../constants/colors";
 
 const HomeScreen = ({ navigation }) => {
   const [data, setData] = useState();
@@ -23,18 +24,14 @@ const HomeScreen = ({ navigation }) => {
   const { favouriteList, updateFavouriteList } =
     useContext(FavouriteListContext);
 
-  console.log("searchhhh trufalse--->", text);
-
   const getMoviesData = () => {
     setLoading(true);
     setSearch(false);
     setText("");
-    console.log("get mooovie dataaa");
     axios
       .get("https://imdb-api.com/en/API/BoxOfficeAllTime/k_b9bwwcyz")
       .then(function (response) {
         // handle success
-        // console.log("response-->", response);
         setData(response?.data?.items);
         setLoading(false);
       })
@@ -52,17 +49,13 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   const onSearch = () => {
-    console.log("get on search dataaa");
     setLoading(true);
     setSearch(true);
     axios
       .get(`https://imdb-api.com/en/API/SearchMovie/k_b9bwwcyz/${text}`)
       .then(function (response) {
         // handle success
-        console.log(
-          "response---------------------------------------------------------->",
-          response.data?.results?.slice(0, 5)
-        );
+
         setSearchResult(response?.data?.results?.slice(0, 5));
         setLoading(false);
       })
@@ -77,8 +70,6 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* ListHeaderComponent={() => {
-          return ( */}
       {loading && (
         <View
           style={{
@@ -140,7 +131,7 @@ const HomeScreen = ({ navigation }) => {
         renderItem={(item) => (
           <MovieItem item={item.item} navigation={navigation} />
         )}
-        contentContainerStyle={{ paddingBottom: 250 }}
+        contentContainerStyle={{ paddingBottom: 120 }}
       />
     </View>
   );
@@ -150,16 +141,17 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#000",
+    flex: 1,
+    backgroundColor: CollorsList.black,
   },
   searchInput: {
     flex: 1,
     height: 40,
-    backgroundColor: "#fff",
+    backgroundColor: CollorsList.white,
     paddingHorizontal: 20,
   },
   title: {
-    color: "#fff",
+    color: CollorsList.white,
     textAlign: "center",
     marginVertical: 20,
     fontSize: 25,

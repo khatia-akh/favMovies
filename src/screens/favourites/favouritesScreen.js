@@ -4,32 +4,13 @@ import axios from "axios";
 import MovieItem from "../../components/moviesItem";
 
 import { FavouriteListContext } from "../../context/favouriteListContext";
+import { CollorsList } from "../../constants/colors";
 
 const FavouritesScreen = ({ navigation }) => {
   const [data, setData] = useState();
-  //   console.log("data000--->", data);
-
-  //   useEffect(() => {
-  //     axios
-  //       .get("https://imdb-api.com/en/API/BoxOfficeAllTime/k_b9bwwcyz")
-  //       .then(function (response) {
-  //         // handle success
-  //         // console.log("response-->", response);
-  //         setData(response.data.items);
-  //       })
-  //       .catch(function (error) {
-  //         // handle error
-  //         console.log(error);
-  //       })
-  //       .then(function () {
-  //         // always executed
-  //       });
-  //   }, []);
 
   const { favouriteList, updateFavouriteList } =
     useContext(FavouriteListContext);
-
-  console.log("favouriteList favouriteList----******--->", favouriteList);
 
   return (
     <View style={styles.container}>
@@ -53,10 +34,10 @@ export default FavouritesScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000",
+    backgroundColor: CollorsList.black,
   },
   title: {
-    color: "#fff",
+    color: CollorsList.white,
     textAlign: "center",
     marginVertical: 20,
     fontSize: 25,
