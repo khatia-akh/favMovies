@@ -1,8 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
+import { FavouriteListContext } from "../context/favouriteListContext";
+
 const MovieItem = ({ item, navigation }) => {
-  //   console.log("item---->??", item);
+  const { favouriteList, updateFavouriteList } =
+    useContext(FavouriteListContext);
+
+  //   console.log("favouriteList favouriteList----******--->", favouriteList);
+
+  //   const [state, setState] = useState([]);
+
+  const saveToFavourite = (favItem) => {
+    // updateFavouriteList({ favourites: [...favouriteList, favItem] });
+    updateFavouriteList([...favouriteList, favItem]);
+    console.log("statatetete--->", favouriteList);
+  };
+
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("Details", { data: item })}
@@ -15,7 +30,10 @@ const MovieItem = ({ item, navigation }) => {
         </View>
         <View style={styles.bottomView}>
           <Text style={styles.title}>rank: {item.rank}</Text>
-          <TouchableOpacity style={styles.saveBtn}>
+          <TouchableOpacity
+            style={styles.saveBtn}
+            onPress={() => saveToFavourite(item)}
+          >
             <Text style={styles.buttonTxt}>save</Text>
           </TouchableOpacity>
         </View>

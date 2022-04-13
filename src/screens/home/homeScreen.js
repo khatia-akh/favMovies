@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -11,12 +11,17 @@ import {
 import axios from "axios";
 import MovieItem from "../../components/moviesItem";
 
+import { FavouriteListContext } from "../../context/favouriteListContext";
+
 const HomeScreen = ({ navigation }) => {
   const [data, setData] = useState();
   const [searchResult, setSearchResult] = useState();
   const [text, setText] = useState("");
   const [search, setSearch] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const { favouriteList, updateFavouriteList } =
+    useContext(FavouriteListContext);
 
   console.log("searchhhh trufalse--->", text);
 
@@ -135,6 +140,7 @@ const HomeScreen = ({ navigation }) => {
         renderItem={(item) => (
           <MovieItem item={item.item} navigation={navigation} />
         )}
+        contentContainerStyle={{ paddingBottom: 250 }}
       />
     </View>
   );

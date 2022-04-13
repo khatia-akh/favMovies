@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import axios from "axios";
 import MovieItem from "../../components/moviesItem";
+
+import { FavouriteListContext } from "../../context/favouriteListContext";
 
 const FavouritesScreen = ({ navigation }) => {
   const [data, setData] = useState();
@@ -24,10 +26,15 @@ const FavouritesScreen = ({ navigation }) => {
   //       });
   //   }, []);
 
+  const { favouriteList, updateFavouriteList } =
+    useContext(FavouriteListContext);
+
+  console.log("favouriteList favouriteList----******--->", favouriteList);
+
   return (
     <View style={styles.container}>
       <FlatList
-        data={[1, 2, 3]}
+        data={favouriteList}
         ListHeaderComponent={() => {
           return <Text style={styles.title}>favorite movie</Text>;
         }}
@@ -35,6 +42,7 @@ const FavouritesScreen = ({ navigation }) => {
         renderItem={(item) => (
           <MovieItem item={item.item} navigation={navigation} />
         )}
+        contentContainerStyle={{ paddingBottom: 120 }}
       />
     </View>
   );
